@@ -11,7 +11,8 @@ https://www.programiz.com/sql/online-compiler/
 6.Filtrar los envíos por estado (entregado o pendiente).
 7.Filtrar los clientes por rango de edad.
 8.Filtrar los clientes por nombre y apellidos.
-
+9.Filtrar los clientes por edad ascendente y descendente
+10.Agrupar clientes por pais y cuantos hay en cada uno 
 
 1.Obtener todos los clientes con su información completa.
 SQL
@@ -60,3 +61,11 @@ FROM Customers c
 LEFT JOIN Orders o ON c.customer_id = o.customer_id
 LEFT JOIN Shippings s ON c.customer_id = s.customer
 WHERE c.first_name = 'John' and c.last_name = "Reinhardt";
+
+9.Filtrar los clientes por edad ascendente y descendente
+select * from Customers
+order by age asc
+
+10.Agrupar clientes por pais y cuantos hay en cada uno 
+select count(customer_id) as "Number of customers" , country from Customers
+group by country

@@ -297,6 +297,22 @@ def get_customers_all_info_name_full(first_name, last_name):
     return jsonify(customers_info)
 
 
+#9.Filtrar los clientes por edad ascendente y descendente
+@app.route('/customers/asc/edad/', methods=['GET'])
+def get_asc_age():
+    all_customers = Customer.query.order_by(Customer.age.asc()).all()
+    resultinfo = customers_schema.dump(all_customers)
+    return jsonify(resultinfo)
+
+#10.Agrupar clientes por pais y cuantos hay en cada uno 
+from sqlalchemy import func
+
+@app.route('/customers/countrygroup/', methods=['GET'])
+def get_country_group():
+    result = db.session.query(func.count(Customer.customer_id).label("Number of customers"), Customer.country).group_by(Customer.country).all()
+    resultinfo = [{"Number of customers": row[0], "country": row[1]} for row in result]
+    return jsonify(resultinfo)
+
 
 
 
@@ -320,3 +336,9 @@ if __name__ == '__main__':
 
 
 
+#Para ejecutar backup en el contenedor
+#docker cp C:\path\to\backup.sql mymysql:/backup.sql
+#mysql -u root -p
+#create database flaskmysql;  # crear base de datos
+#use flaskmysql;  # seleccionar base de datos
+#source /backup.sql;  # ejecutar script
