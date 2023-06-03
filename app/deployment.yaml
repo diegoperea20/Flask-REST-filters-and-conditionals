@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myappi-deployment
+spec:
+  selector:
+    matchLabels:
+      app: myappi
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: myappi
+    spec:
+     containers:
+     - name: myappi
+       image: "name of imagen in dockerhub":latest
+       imagePullPolicy: Always
+       ports:
+       - containerPort: 8080

@@ -1,0 +1,62 @@
+Filtros y condiciones que se hará 
+Probar en :
+https://www.programiz.com/sql/online-compiler/
+
+
+1.Obtener todos los clientes con su información completa.
+2.Filtrar los clientes por país.
+3.Obtener los pedidos de un cliente específico.
+4.Filtrar los pedidos por cantidad (por encima de cierto amount).
+5.Obtener los envíos pendientes.
+6.Filtrar los envíos por estado (entregado o pendiente).
+7.Filtrar los clientes por rango de edad.
+8.Filtrar los clientes por nombre y apellidos.
+
+
+1.Obtener todos los clientes con su información completa.
+SQL
+------
+/*
+SELECT c.customer_id, c.first_name, c.last_name, c.age, c.country, o.order_id, o.item, o.amount ,s.status,s.shipping_id
+FROM Customers c
+left JOIN Orders o ON c.customer_id = o.customer_id
+left JOIN Shippings s ON c.customer_id = s.customer;*/
+
+
+2.Filtrar los clientes por país.
+SELECT c.customer_id, c.first_name, c.last_name, c.age, c.country
+FROM Customers c
+where country = "USA";
+
+3.Obtener los pedidos de un cliente específico.
+SELECT c.customer_id,c.first_name, c.last_name, o.order_id, o.item, o.amount
+from Orders o , Customers c
+where c.customer_id = o.customer_id
+
+---
+SELECT c.customer_id, o.order_id, o.item, o.amount
+from Orders o , Customers c
+where c.customer_id = o.customer_id   and c.first_name="John" and c.last_name="Doe"
+
+4.Filtrar los pedidos por cantidad (por encima de cierto amount).
+SELECT *
+from Orders 
+where amount > 300;
+
+5 y 6 .Obtener los envíos pendientes.
+SELECT s.shipping_id , s.status, s.customer ,o.order_id ,o.item,o.amount
+from Shippings s
+left JOIN Orders o ON s.customer = o.customer_id
+where s.status = "Pending";
+
+7.Filtrar los clientes por rango de edad.
+select * from Customers
+where age > 22;
+
+
+8.Filtrar los clientes por nombre y apellidos.
+SELECT c.customer_id, c.first_name, c.last_name, c.age, c.country, o.order_id, o.item, o.amount, s.status, s.shipping_id
+FROM Customers c
+LEFT JOIN Orders o ON c.customer_id = o.customer_id
+LEFT JOIN Shippings s ON c.customer_id = s.customer
+WHERE c.first_name = 'John' and c.last_name = "Reinhardt";
